@@ -1,0 +1,8 @@
+{
+  "appId": "com.simmer.app",
+  "appName": "simmer",
+  "webDir": "public",
+  "server": {
+    "androidScheme": "https"
+  }
+}
