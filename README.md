@@ -15,5 +15,5 @@ To install on desktop:
 
 
 
-
+Created with React.js and Next.js
 Utilizes Spoonacular API
