@@ -1,6 +1,3 @@
-// import fetch from 'node-fetch';
-// import axios from 'axios';
-
 // List of possible values for the environment variable
 const possibleValues = [
     "e10b4b24c6384302b405b8570f07c521",
@@ -58,39 +55,15 @@ let usedValues = new Set();
 
 export default async function handler(req, res) {
     try {
-        // Logic to select a new value for the environment variable
+        // getting a new value for the environment variable
         let newValue = generateNewValue();
         
-        // Update the environment variable using Vercel API
+        // Updating the environment variable using vercel API
         const vercelToken = process.env.NEXT_PUBLIC_VERCEL_TOKEN;
         const projectId = process.env.NEXT_PUBLIC_VERCEL_PROJECT_ID;
         const variableName = 'xpIunuM2zetuLKYg';
 
         const fetch = await import('node-fetch');
-
-        // const response = await axios.patch(
-        //     `https://api.vercel.com/v9/projects/${projectId}/env/${variableName}`,
-        //     { value: newValue },
-        //     {
-        //         headers: {
-        //             Authorization: `Bearer ${vercelToken}`,
-        //             'Content-Type': 'application/json',
-        //         },
-        //     }
-        // );
-
-        // // Trigger a deployment using the Vercel API
-        // const deployResponse = await axios.post(
-        //     "https://api.vercel.com/v1/integrations/deploy/prj_n1HPreWkHvWRmTRWivnYc3cIkEmB/BpvAeTU5pS",
-        //     {},
-        //     {
-        //         headers: {
-        //             Authorization: `Bearer ${vercelToken}`,
-        //             'Content-Type': 'application/json',
-        //         },
-        //     }
-        // );
-
 
         const response = await fetch.default(
             `https://api.vercel.com/v9/projects/${projectId}/env/${variableName}`,
@@ -104,7 +77,7 @@ export default async function handler(req, res) {
             }
         );
 
-        // Trigger a deployment using the Vercel API
+        // Trigger a deployment using deploy hook
         const deployResponse = await fetch.default(
             "https://api.vercel.com/v1/integrations/deploy/prj_n1HPreWkHvWRmTRWivnYc3cIkEmB/BpvAeTU5pS",
             {
@@ -117,8 +90,6 @@ export default async function handler(req, res) {
             }
         );
 
-
-
         res.status(200).json({ message: 'Environment variable updated successfully' });
     } catch (error) {
         console.error('Error updating environment variable:', error);
@@ -127,7 +98,7 @@ export default async function handler(req, res) {
 };
 
 function generateNewValue() {
-    // Get the current timestamp in milliseconds
+    // current timestamp
     const currentTime = Date.now();
     
     // Remove values from the used set if they are older than 24 hours
@@ -149,22 +120,3 @@ function generateNewValue() {
     
     return newValue;
 }
-
-// async function triggerDeployment(vercelToken, projectId) {
-//     try {
-//         // Trigger deployment using Vercel API
-//         await axios.post(
-//             `https://api.vercel.com/v12/now/deployments`,
-//             { projectId },
-//             {
-//                 headers: {
-//                     Authorization: `Bearer ${vercelToken}`,
-//                     'Content-Type': 'application/json',
-//                 },
-//             }
-//         );
-//         console.log('Deployment triggered successfully');
-//     } catch (error) {
-//         console.error('Error triggering deployment:', error.response.data);
-//     }
-// }
