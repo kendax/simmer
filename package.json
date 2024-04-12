@@ -16,7 +16,6 @@
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@vercel/postgres": "^0.7.2",
-    "axios": "^1.6.8",
     "bcrypt": "^5.1.1",
     "boxicons": "^2.1.4",
     "iron-session": "^8.0.1",
@@ -29,6 +28,7 @@
   },
   "devDependencies": {
     "@svgr/webpack": "^8.1.0",
+    "axios": "^1.6.8",
     "webpack": "^5.91.0"
   }
 }
