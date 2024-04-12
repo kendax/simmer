@@ -1,4 +1,4 @@
-import fetch from 'node-fetch';
+// import fetch from 'node-fetch';
 // import axios from 'axios';
 
 // List of possible values for the environment variable
@@ -66,6 +66,8 @@ export default async function handler(req, res) {
         const projectId = process.env.NEXT_PUBLIC_VERCEL_PROJECT_ID;
         const variableName = 'xpIunuM2zetuLKYg';
 
+        const fetch = await import('node-fetch');
+
         // const response = await axios.patch(
         //     `https://api.vercel.com/v9/projects/${projectId}/env/${variableName}`,
         //     { value: newValue },
@@ -90,7 +92,7 @@ export default async function handler(req, res) {
         // );
 
 
-        const response = await fetch(
+        const response = await fetch.default(
             `https://api.vercel.com/v9/projects/${projectId}/env/${variableName}`,
             {
                 method: 'PATCH',
@@ -103,7 +105,7 @@ export default async function handler(req, res) {
         );
 
         // Trigger a deployment using the Vercel API
-        const deployResponse = await fetch(
+        const deployResponse = await fetch.default(
             "https://api.vercel.com/v1/integrations/deploy/prj_n1HPreWkHvWRmTRWivnYc3cIkEmB/BpvAeTU5pS",
             {
                 method: 'POST',
