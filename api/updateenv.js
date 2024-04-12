@@ -63,7 +63,7 @@ export default async function handler(req, res) {
         // Update the environment variable using Vercel API
         const vercelToken = process.env.NEXT_PUBLIC_VERCEL_TOKEN;
         const projectId = process.env.NEXT_PUBLIC_VERCEL_PROJECT_ID;
-        const variableName = 'NEXT_PUBLIC_API_KEY';
+        const variableName = 'xpIunuM2zetuLKYg';
 
         const response = await axios.patch(
             `https://api.vercel.com/v9/projects/${projectId}/env/${variableName}`,
@@ -77,7 +77,16 @@ export default async function handler(req, res) {
         );
 
         // Trigger a deployment using the Vercel API
-        await triggerDeployment(vercelToken, projectId);
+        const deployResponse = await axios.post(
+            "https://api.vercel.com/v1/integrations/deploy/prj_n1HPreWkHvWRmTRWivnYc3cIkEmB/BpvAeTU5pS",
+            {},
+            {
+                headers: {
+                    Authorization: `Bearer ${vercelToken}`,
+                    'Content-Type': 'application/json',
+                },
+            }
+        );
 
         res.status(200).json({ message: 'Environment variable updated successfully' });
     } catch (error) {
@@ -110,21 +119,21 @@ function generateNewValue() {
     return newValue;
 }
 
-async function triggerDeployment(vercelToken, projectId) {
-    try {
-        // Trigger deployment using Vercel API
-        await axios.post(
-            `https://api.vercel.com/v12/now/deployments`,
-            { projectId },
-            {
-                headers: {
-                    Authorization: `Bearer ${vercelToken}`,
-                    'Content-Type': 'application/json',
-                },
-            }
-        );
-        console.log('Deployment triggered successfully');
-    } catch (error) {
-        console.error('Error triggering deployment:', error.response.data);
-    }
-}
+// async function triggerDeployment(vercelToken, projectId) {
+//     try {
+//         // Trigger deployment using Vercel API
+//         await axios.post(
+//             `https://api.vercel.com/v12/now/deployments`,
+//             { projectId },
+//             {
+//                 headers: {
+//                     Authorization: `Bearer ${vercelToken}`,
+//                     'Content-Type': 'application/json',
+//                 },
+//             }
+//         );
+//         console.log('Deployment triggered successfully');
+//     } catch (error) {
+//         console.error('Error triggering deployment:', error.response.data);
+//     }
+// }
