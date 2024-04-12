@@ -1,5 +1,5 @@
-// import axios from 'axios';
 import fetch from 'node-fetch';
+// import axios from 'axios';
 
 // List of possible values for the environment variable
 const possibleValues = [
