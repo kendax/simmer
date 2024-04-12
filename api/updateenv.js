@@ -1,4 +1,5 @@
-import axios from 'axios';
+// import axios from 'axios';
+import fetch from 'node-fetch';
 
 // List of possible values for the environment variable
 const possibleValues = [
@@ -65,28 +66,56 @@ export default async function handler(req, res) {
         const projectId = process.env.NEXT_PUBLIC_VERCEL_PROJECT_ID;
         const variableName = 'xpIunuM2zetuLKYg';
 
-        const response = await axios.patch(
+        // const response = await axios.patch(
+        //     `https://api.vercel.com/v9/projects/${projectId}/env/${variableName}`,
+        //     { value: newValue },
+        //     {
+        //         headers: {
+        //             Authorization: `Bearer ${vercelToken}`,
+        //             'Content-Type': 'application/json',
+        //         },
+        //     }
+        // );
+
+        // // Trigger a deployment using the Vercel API
+        // const deployResponse = await axios.post(
+        //     "https://api.vercel.com/v1/integrations/deploy/prj_n1HPreWkHvWRmTRWivnYc3cIkEmB/BpvAeTU5pS",
+        //     {},
+        //     {
+        //         headers: {
+        //             Authorization: `Bearer ${vercelToken}`,
+        //             'Content-Type': 'application/json',
+        //         },
+        //     }
+        // );
+
+
+        const response = await fetch(
             `https://api.vercel.com/v9/projects/${projectId}/env/${variableName}`,
-            { value: newValue },
             {
+                method: 'PATCH',
                 headers: {
                     Authorization: `Bearer ${vercelToken}`,
                     'Content-Type': 'application/json',
                 },
+                body: JSON.stringify({ value: newValue })
             }
         );
 
         // Trigger a deployment using the Vercel API
-        const deployResponse = await axios.post(
+        const deployResponse = await fetch(
             "https://api.vercel.com/v1/integrations/deploy/prj_n1HPreWkHvWRmTRWivnYc3cIkEmB/BpvAeTU5pS",
-            {},
             {
+                method: 'POST',
                 headers: {
                     Authorization: `Bearer ${vercelToken}`,
                     'Content-Type': 'application/json',
                 },
+                body: JSON.stringify({})
             }
         );
+
+
 
         res.status(200).json({ message: 'Environment variable updated successfully' });
     } catch (error) {
